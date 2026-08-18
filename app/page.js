@@ -39,14 +39,7 @@ export default function Home() {
               <li><a href="#contact">Contact</a></li>
             </ul>
           </nav>
-          <div className="header-actions">
-            <button className="icon-btn"><i className="fa-solid fa-magnifying-glass"></i></button>
-            <button className="icon-btn"><i className="fa-regular fa-user"></i></button>
-            <button className="icon-btn cart-btn">
-              <i className="fa-solid fa-cart-shopping"></i>
-              <span className="cart-count">0</span>
-            </button>
-          </div>
+
         </div>
       </header>
 
