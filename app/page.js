@@ -1,4 +1,22 @@
+"use client";
+import { useEffect, useState } from 'react';
+
 export default function Home() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Assuming hero is at the top, max scroll is 2 window heights
+      const maxScroll = window.innerHeight * 2;
+      const progress = Math.min(Math.max(window.scrollY / maxScroll, 0), 1);
+      setScrollProgress(progress);
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial call
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       {/* Top Bar */}
@@ -44,19 +62,33 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="hero" style={{ backgroundImage: "url('/assets/images/hero_granite_1787046303167.jpg')" }}>
-        <div className="container">
-          <div className="hero-content">
-            <span className="subtitle">PREMIUM QUALITY GRANITE</span>
-            <h2>Elegant Stones<br />for <span className="highlight">Modern Spaces</span></h2>
-            <p>Discover a wide range of premium granite slabs for kitchens, bathrooms, flooring and more.</p>
-            <div className="hero-buttons">
-              <a href="#collection" className="btn btn-primary">Explore Our Granite <i className="fa-solid fa-arrow-right"></i></a>
-              <a href="#contact" className="btn btn-outline">Get a Quote</a>
+      <div className="hero-scroll-container">
+        <section className="sticky-hero">
+          <div 
+            className="hero-bg" 
+            style={{ 
+              backgroundImage: "url('/assets/images/hero_granite_1787046303167.jpg')",
+              transform: `scale(${1 + scrollProgress * 3})`,
+              transition: 'transform 0.1s ease-out',
+              transformOrigin: 'center center'
+            }} 
+          />
+          <div className="container" style={{ 
+            opacity: 1 - scrollProgress * 2,
+            transition: 'opacity 0.1s ease-out'
+          }}>
+            <div className="hero-content">
+              <span className="subtitle">PREMIUM QUALITY GRANITE</span>
+              <h2>Elegant Stones<br />for <span className="highlight">Modern Spaces</span></h2>
+              <p>Discover a wide range of premium granite slabs for kitchens, bathrooms, flooring and more.</p>
+              <div className="hero-buttons">
+                <a href="#collection" className="btn btn-primary">Explore Our Granite <i className="fa-solid fa-arrow-right"></i></a>
+                <a href="#contact" className="btn btn-outline">Get a Quote</a>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Collection Section */}
       <section id="collection" className="collection section">
